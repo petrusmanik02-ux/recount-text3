@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bahasa Inggris Kelas 9 - Recount Text & HOTS Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
+            min-height: 100vh;
+            user-select: none; /* Mencegah copy-paste soal saat ujian */
+        }
+
+        /* Animasi Kustom untuk Karakter SVG & Efek */
+        @keyframes bounceSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.6)); }
+            50% { transform: scale(1.06); filter: drop-shadow(0 0 22px rgba(250, 204, 21, 0.9)); }
+        }
+        @keyframes waveHand {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-18deg); }
+            75% { transform: rotate(18deg); }
+        }
+        @keyframes shakeRed {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-10px); }
+            40%, 80% { transform: translateX(10px); }
+        }
+        @keyframes confettiFall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+        }
+
+        .animate-bounce-slow { animation: bounceSlow 2.2s infinite ease-in-out; }
+        .animate-trophy { animation: pulseGlow 2s infinite ease-in-out; }
+        .animate-wave { transform-origin: 75% 70%; animation: waveHand 1.4s infinite ease-in-out; }
+        .animate-alarm { animation: shakeRed 0.4s infinite; }
+
+        .confetti-piece {
+            position: fixed;
+            top: -10px;
+            width: 12px;
+            height: 12px;
+            z-index: 60;
+            pointer-events: none;
+            animation: confettiFall linear forwards;
+        }
+
+        /* Custom Radio Button Styling */
+        .option-label:hover {
+            transform: translateX(4px);
+        }
+        input[type="radio"]:checked + .option-box {
+            background-color: #eef2ff;
+            border-color: #4f46e5;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+        }
+        input[type="radio"]:checked + .option-box .option-letter {
+            background-color: #4f46e5;
+            color: #ffffff;
+            border-color: #4f46e5;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased selection:bg-indigo-200">
+
+    <!-- Top Sticky Bar (Muncul saat Ujian Aktif) -->
+    <header id="examHeader" class="hidden sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-indigo-100 shadow-sm px-4 py-3">
+        <div class="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold text-lg shadow">
+                    IX
+                </div>
+                <div>
+                    <p id="displayStudentName" class="font-bold text-slate-900 text-sm sm:text-base leading-tight">Nama Siswa</p>
+                    <p id="displayStudentClass" class="text-xs font-medium text-indigo-600">Kelas IX</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <div class="hidden sm:flex items-center gap-1.5 bg-amber-50 border border-amber-200 text-amber-800 px-3 py-1.5 rounded-xl text-xs font-semibold">
+                    <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
+                    Anti-Pindah Tab Aktif
+                </div>
+                <!-- Timer 20 Menit -->
+                <div id="timerBox" class="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-xl font-mono font-bold text-base sm:text-lg shadow-md">
+                    <svg class="w-5 h-5 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span id="timerDisplay">20:00</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-5xl mx-auto px-4 py-6 sm:py-10">
+
+        <!-- =========================================================
+             SECTION 1: MATERI PEMBELAJARAN & FORM IDENTITAS SISWA
+             ========================================================= -->
+        <section id="introSection" class="space-y-6">
+            <!-- Hero Banner -->
+            <div class="bg-gradient-to-r from-indigo-700 via-blue-700 to-indigo-800 rounded-3xl p-6 sm:p-10 text-white shadow-xl relative overflow-hidden">
+                <div class="relative z-10 max-w-3xl">
+                    <span class="inline-block bg-white/20 backdrop-blur-sm text-indigo-100 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
+                        Bahasa Inggris • SMP Kelas IX
+                    </span>
+                    <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight mb-3">
+                        Mastering Recount Text
+                    </h1>
+                    <p class="text-indigo-100 text-sm sm:text-base leading-relaxed">
+                        Pelajari struktur dan pemahaman mendalam mengenai teks pengalaman masa lampau (<em>Recount Text</em>), kemudian uji kemampuan berpikir tingkat tinggi (HOTS) kamu!
+                    </p>
+                </div>
+                <!-- Decorative Circle -->
+                <div class="absolute -right-12 -bottom-12 w-56 h-56 rounded-full bg-white/10 pointer-events-none"></div>
+            </div>
+
+            <!-- Tujuan Pembelajaran & Ringkasan Materi -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Card 1: Tujuan & Generic Structure -->
+                <div class="bg-white rounded-3xl p-6 shadow-md border border-slate-100 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold">1</div>
+                        <h2 class="text-lg font-bold text-slate-900">Identify Generic Structure</h2>
+                    </div>
+                    <p class="text-sm text-slate-600">
+                        <strong>Recount Text</strong> adalah teks yang menceritakan kembali peristiwa atau pengalaman yang terjadi di masa lampau secara kronologis. Strukturnya terdiri dari:
+                    </p>
+                    <ul class="space-y-2.5 text-sm">
+                        <li class="bg-slate-50 p-3 rounded-2xl border border-slate-100">
+                            <span class="font-bold text-indigo-700">1. Orientation:</span> Pengenalan tokoh (<em>who</em>), tempat (<em>where</em>), dan waktu terjadinya peristiwa (<em>when</em>).
+                        </li>
+                        <li class="bg-slate-50 p-3 rounded-2xl border border-slate-100">
+                            <span class="font-bold text-indigo-700">2. Events:</span> Rangkaian kejadian atau peristiwa yang diceritakan secara berurutan sesuai waktu.
+                        </li>
+                        <li class="bg-slate-50 p-3 rounded-2xl border border-slate-100">
+                            <span class="font-bold text-indigo-700">3. Re-orientation:</span> Kesimpulan, rangkuman, atau kesan/perasaan penulis di akhir cerita (bersifat opsional).
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Card 2: Comprehend Recount Texts -->
+                <div class="bg-white rounded-3xl p-6 shadow-md border border-slate-100 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">2</div>
+                        <h2 class="text-lg font-bold text-slate-900">Comprehend Recount Texts</h2>
+                    </div>
+                    <p class="text-sm text-slate-600">
+                        Untuk memahami isi dan makna tersirat dalam <em>Recount Text</em>, perhatikan fungsi sosial dan ciri kebahasaannya:
+                    </p>
+                    <div class="space-y-2.5 text-sm">
+                        <div class="bg-emerald-50/70 p-3 rounded-2xl border border-emerald-100">
+                            <span class="font-bold text-emerald-800">Social Function:</span> Memberikan informasi atau menghibur pembaca melalui pengalaman nyata/imajinatif di masa lalu.
+                        </div>
+                        <div class="bg-emerald-50/70 p-3 rounded-2xl border border-emerald-100">
+                            <span class="font-bold text-emerald-800">Language Features:</span>
+                            <ul class="list-disc list-inside text-slate-700 mt-1 space-y-1">
+                                <li>Menggunakan <strong>Simple Past Tense</strong> (<em>went, saw, realized, felt</em>).</li>
+                                <li>Menggunakan <strong>Time Connectives</strong> (<em>first, then, after that, finally</em>).</li>
+                                <li>Menggunakan <strong>Action Verbs</strong> dan keterangan waktu lampau (<em>last holiday, two years ago</em>).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Identitas Siswa & Peringatan Sistem -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-lg border-2 border-indigo-100">
+                <div class="max-w-xl mx-auto">
+                    <div class="text-center mb-6">
+                        <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900">Mulai Evaluasi HOTS</h3>
+                        <p class="text-sm text-slate-500 mt-1">Isi Nama Lengkap dan Kelas kamu untuk mengaktifkan soal ujian.</p>
+                    </div>
+
+                    <!-- Alert Peraturan Ujian -->
+                    <div class="bg-rose-50 border border-rose-200 rounded-2xl p-4 mb-6 flex items-start gap-3">
+                        <svg class="w-6 h-6 text-rose-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                        <div class="text-xs sm:text-sm text-rose-800 space-y-1">
+                            <p class="font-bold">PERHATIAN SISTEM PENGAWAS OTOMATIS:</p>
+                            <ul class="list-disc list-inside space-y-0.5 text-rose-700">
+                                <li>Waktu pengerjaan adalah <strong>20 menit</strong> (hitung mundur).</li>
+                                <li>Dilarang keras <strong>beralih tab, membuka aplikasi lain, atau keluar layar</strong> saat ujian berlangsung.</li>
+                                <li>Jika berpindah tab, layar otomatis menjadi <strong>MERAH (GAGAL)</strong> dan perangkat akan membunyikan <strong>ALARM</strong>!</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Error Message Inline -->
+                    <div id="formError" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl text-sm font-medium mb-4">
+                        Silakan lengkapi Nama Lengkap dan Kelas terlebih dahulu!
+                    </div>
+
+                    <form id="startForm" class="space-y-4">
+                        <div>
+                            <label for="studentName" class="block text-sm font-bold text-slate-700 mb-1.5">Nama Lengkap</label>
+                            <input type="text" id="studentName" placeholder="Contoh: Budi Santoso" required
+                                class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:border-indigo-600 focus:ring-4 focus:ring-indigo-100 outline-none transition text-slate-900 font-medium">
+                        </div>
+
+                        <div>
+                            <label for="studentClass" class="block text-sm font-bold text-slate-700 mb-1.5">Kelas</label>
+                            <input type="text" id="studentClass" placeholder="Contoh: IX-A / 9B" required
+                                class="w-full px-4 py-3 rounded-2xl border border-slate-300 focus:border-indigo-600 focus:ring-4 focus:ring-indigo-100 outline-none transition text-slate-900 font-medium">
+                        </div>
+
+                        <button type="submit"
+                            class="w-full py-4 px-6 bg-indigo-600 hover:bg-indigo-700 active:scale-[0.99] text-white font-bold rounded-2xl shadow-lg shadow-indigo-200 transition flex items-center justify-center gap-2 text-base cursor-pointer">
+                            <span>Mulai Kerjakan 5 Soal HOTS</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             SECTION 2: HALAMAN SOAL UJIAN (5 SOAL PG HOTS)
+             ========================================================= -->
+        <section id="quizSection" class="hidden space-y-6">
+            <!-- Reading Passage Card -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-md border border-indigo-100">
+                <div class="flex items-center justify-between flex-wrap gap-2 mb-4 pb-3 border-b border-slate-100">
+                    <span class="bg-indigo-100 text-indigo-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
+                        Reading Passage (Questions 1 – 5)
+                    </span>
+                    <span class="text-xs font-medium text-slate-400">Read the text carefully before answering</span>
+                </div>
+
+                <h3 class="text-xl font-extrabold text-slate-900 mb-4 text-center">
+                    An Unforgettable Lesson at Mount Sibayak
+                </h3>
+
+                <div class="space-y-3 text-slate-700 text-sm sm:text-base leading-relaxed text-justify">
+                    <p>
+                        <span class="font-bold text-indigo-600">[Paragraph 1]</span> Last semester break, my cousin Ardi and I decided to hike Mount Sibayak in North Sumatra. Since we had hiked several hills before, we arrogantly assumed that Sibayak would be an easy trail. We packed lightly, bringing only one small bottle of water each, a light jacket, and no flashlight, as we planned to descend before noon.
+                    </p>
+                    <p>
+                        <span class="font-bold text-indigo-600">[Paragraph 2]</span> We started our ascent at 6:00 AM under a clear sky. For the first two hours, everything went smoothly, and we joked about how overprepared other hikers looked with their heavy backpacks. However, shortly after we reached the rocky crater area at 9:30 AM, thick fog suddenly rolled in, dropping the temperature drastically. Within minutes, visibility shrunk to less than three meters, and the familiar trail vanished beneath the mist.
+                    </p>
+                    <p>
+                        <span class="font-bold text-indigo-600">[Paragraph 3]</span> Panic began to set in as our phone batteries died from the cold. Realizing that wandering around could lead us toward steep cliffs, we remembered a basic survival rule: stay put and conserve energy. We huddled behind a large volcanic rock to shield ourselves from the freezing wind. Almost two hours later, we heard voices calling out. Fortunately, a group of experienced local guides noticed our absence at the basecamp post and came looking for us. They shared warm tea, lent us thermal blankets, and guided us safely back down.
+                    </p>
+                    <p>
+                        <span class="font-bold text-indigo-600">[Paragraph 4]</span> That terrifying afternoon completely changed my perspective on nature. I realized that overconfidence can be far more dangerous than a difficult trail, and proper preparation is never something to mock.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Questions Container -->
+            <form id="quizForm" class="space-y-5">
+                <div id="questionsContainer" class="space-y-5"></div>
+
+                <!-- Warning jika belum semua soal dijawab -->
+                <div id="quizValidationMsg" class="hidden bg-amber-100 border border-amber-400 text-amber-800 px-4 py-3 rounded-2xl text-sm font-semibold text-center">
+                    Masih ada soal yang belum dijawab! Pastikan semua 5 soal sudah dipilih jawabannya.
+                </div>
+
+                <div class="pt-2 pb-8">
+                    <button type="submit"
+                        class="w-full py-4 px-6 bg-emerald-600 hover:bg-emerald-700 active:scale-[0.99] text-white font-extrabold rounded-2xl shadow-lg shadow-emerald-200 transition text-base sm:text-lg cursor-pointer">
+                        Selesai & Kirim Jawaban
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- =========================================================
+             SECTION 3: HALAMAN HASIL SKOR & ANIMASI FEEDBACK
+             ========================================================= -->
+        <section id="resultSection" class="hidden">
+            <div id="resultCard" class="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border border-slate-100 text-center max-w-2xl mx-auto relative overflow-hidden">
+                
+                <!-- Animated SVG Container -->
+                <div id="animationContainer" class="w-44 h-44 mx-auto mb-4 flex items-center justify-center">
+                    <!-- Diisi dinamis lewat JS (Trophy/Star untuk > 80, Semangat Mascot untuk <= 80) -->
+                </div>
+
+                <!-- Title & Subtitle -->
+                <h2 id="resultHeadline" class="text-2xl sm:text-4xl font-extrabold mb-2"></h2>
+                <p id="resultSubheadline" class="text-slate-600 text-sm sm:text-base max-w-md mx-auto mb-6"></p>
+
+                <!-- Student Score Card -->
+                <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200/80 mb-6 max-w-md mx-auto">
+                    <div class="grid grid-cols-2 gap-3 text-left text-sm mb-4 pb-4 border-b border-slate-200">
+                        <div>
+                            <p class="text-xs text-slate-400 uppercase font-semibold">Nama Siswa</p>
+                            <p id="resName" class="font-bold text-slate-800 truncate">-</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-400 uppercase font-semibold">Kelas</p>
+                            <p id="resClass" class="font-bold text-slate-800">-</p>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Nilai Akhir Kamu</p>
+                        <div id="resScore" class="text-5xl font-black text-indigo-600">0</div>
+                        <p id="resCorrectCount" class="text-xs font-medium text-slate-500 mt-1">Benar 0 dari 5 soal</p>
+                    </div>
+                </div>
+
+                <!-- Pembahasan Singkat Jawaban -->
+                <div id="reviewContainer" class="text-left space-y-3 mb-6"></div>
+
+                <!-- Action Button -->
+                <button id="retryBtn" onclick="resetExam()"
+                    class="px-8 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl shadow-md transition cursor-pointer">
+                    Ulangi Kuis / Coba Lagi
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- =========================================================
+         FULLSCREEN OVERLAY MERAH: ANTI-CHEATING (PINDAH TAB / WAKTU HABIS)
+         ========================================================= -->
+    <div id="cheatOverlay" class="hidden fixed inset-0 z-50 bg-red-600 text-white flex flex-col items-center justify-center p-6 text-center">
+        <div class="max-w-lg w-full bg-red-700/90 border-4 border-white rounded-3xl p-8 shadow-2xl animate-alarm">
+            <div class="w-24 h-24 bg-white text-red-600 rounded-full flex items-center justify-center mx-auto mb-5 shadow-lg">
+                <svg class="w-14 h-14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                </svg>
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-black tracking-tight uppercase mb-2">
+                UJIAN GAGAL!
+            </h1>
+            <p id="failReasonText" class="text-lg font-bold text-red-100 mb-4">
+                Terdeteksi Beralih Tab / Keluar dari Aplikasi!
+            </p>
+            <div class="bg-red-900/60 rounded-2xl p-4 text-sm text-red-100 mb-6">
+                <p><strong>Nama:</strong> <span id="failStudentName">-</span></p>
+                <p><strong>Kelas:</strong> <span id="failStudentClass">-</span></p>
+                <p class="mt-2 font-semibold text-amber-300">Status: DISKUALIFIKASI (Nilai: 0)</p>
+            </div>
+            <button onclick="acknowledgeFailAndReset()"
+                class="w-full py-3.5 px-6 bg-white text-red-700 hover:bg-red-50 font-extrabold rounded-2xl shadow-lg transition cursor-pointer">
+                Matikan Alarm & Kembali ke Awal
+            </button>
+        </div>
+    </div>
+
+    <script>
+        /* =========================================================
+           1. DATA 5 SOAL PILIHAN GANDA HOTS (RECOUNT TEXT KELAS 9)
+           ========================================================= */
+        const hotsQuestions = [
+            {
+                id: 1,
+                category: "Generic Structure Analysis (HOTS - Analyzing)",
+                question: "Which statement best analyzes the generic structure of the text above?",
+                options: [
+                    "Paragraph 1 serves as the Orientation introducing the characters, setting, and initial attitude, while Paragraph 4 functions as the Re-orientation showing the writer's reflection.",
+                    "Paragraph 1 and 2 belong to the Orientation because they both describe the weather condition before the storm arrived.",
+                    "Paragraph 3 is the Re-orientation because it presents the resolution when the local guides rescued the hikers.",
+                    "The text has no Re-orientation because the writer ends the story with a sad feeling about their lost equipment."
+                ],
+                correct: 0,
+                explanation: "Paragraf 1 merupakan Orientation (memperkenalkan tokoh, waktu, tempat, serta kondisi awal), Paragraf 2-3 adalah Events (rangkaian masalah & penyelamatan), dan Paragraf 4 adalah Re-orientation (refleksi/pelajaran moral penulis)."
+            },
+            {
+                id: 2,
+                category: "Cause-Effect & Inference (HOTS - Evaluating)",
+                question: "Why did the writer and Ardi face a life-threatening situation at 9:30 AM? Evaluate the root cause based on the text.",
+                options: [
+                    "Because the local guides forgot to warn them at the basecamp post before 6:00 AM.",
+                    "Because their overconfidence led to poor preparation, making them vulnerable when sudden extreme weather hit.",
+                    "Because they chose a restricted cliff route instead of following the main trail to the crater.",
+                    "Because their flashlights were broken and they ran out of food during the afternoon descent."
+                ],
+                correct: 1,
+                explanation: "Akar masalahnya adalah rasa terlalu percaya diri (overconfidence) yang membuat mereka meremehkan persiapan (tidak membawa jaket tebal, senter, atau baterai cadangan) saat kabut tebal tiba-tiba turun."
+            },
+            {
+                id: 3,
+                category: "Critical Decision Making (HOTS - Analyzing)",
+                question: "In Paragraph 3, what saved the writer and Ardi from a worse accident before the guides arrived?",
+                options: [
+                    "They immediately ran down the rocky trail before their phone batteries died completely.",
+                    "They used their phone flashlights to signal the basecamp post from the edge of the cliff.",
+                    "They controlled their panic, stayed in one sheltered spot, and conserved their body heat.",
+                    "They followed another group of hikers who had heavy backpacks and thermal blankets."
+                ],
+                correct: 2,
+                explanation: "Pada paragraf 3 disebutkan: 'stay put and conserve energy. We huddled behind a large volcanic rock...' (tetap diam di tempat aman berlindung di balik batu untuk menghemat energi/panas tubuh)."
+            },
+            {
+                id: 4,
+                category: "Vocabulary & Implicit Meaning (HOTS - Interpreting)",
+                question: "\"...we joked about how <u>overprepared</u> other hikers looked with their heavy backpacks.\" (Paragraph 2). What does the writer imply through this sentence?",
+                options: [
+                    "The writer admired other hikers for carrying complete mountain safety gear.",
+                    "The writer initially felt superior and thought safety equipment was unnecessary for Mount Sibayak.",
+                    "Other hikers were carrying too much luggage because they planned to camp for a week.",
+                    "The writer wanted to borrow some equipment from the other hikers they met on the trail."
+                ],
+                correct: 1,
+                explanation: "Kata 'joked about how overprepared' menyiratkan bahwa penulis awalnya merasa lebih hebat/meremehkan perlengkapan keselamatan pendaki lain yang dianggap berlebihan."
+            },
+            {
+                id: 5,
+                category: "Moral Value & Real-World Application (HOTS - Evaluating)",
+                question: "If you were to apply the main lesson of this recount text to a student's daily life, which situation best reflects the writer's message?",
+                options: [
+                    "A student skips studying for a final exam because they got good grades on previous quizzes, and ends up failing.",
+                    "A student refuses to join a school trip to the mountains because they are afraid of cold weather.",
+                    "A student brings too many heavy textbooks to school every day so they will never get scolded.",
+                    "A student always relies on friends to help them finish difficult assignments at the last minute."
+                ],
+                correct: 0,
+                explanation: "Pesan utama teks adalah 'overconfidence can be far more dangerous than a difficult trail, and proper preparation is never something to mock'—sama seperti siswa yang meremehkan belajar karena merasa sudah pintar lalu gagal saat ujian."
+            }
+        ];
+
+        /* =========================================================
+           2. STATE MANAGEMENT & AUDIO SYNTHESIZER (WEB AUDIO API)
+           ========================================================= */
+        let examActive = false;
+        let timerInterval = null;
+        let alarmInterval = null;
+        let timeRemaining = 20 * 60; // 20 menit dalam detik (1200 detik)
+        let audioCtx = null;
+
+        let studentData = {
+            name: "",
+            className: ""
+        };
+
+        // Inisialisasi Web Audio API (Bebas ketergantungan file MP3 eksternal agar 100% jalan di APK/GitHub)
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // Bunyi Alarm Keras saat Pindah Tab / Gagal
+        function startAlarmSound() {
+            initAudio();
+            stopAlarmSound();
+
+            const playSirenPulse = () => {
+                if (!audioCtx) return;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sawtooth';
+                
+                const now = audioCtx.currentTime;
+                osc.frequency.setValueAtTime(880, now);
+                osc.frequency.linearRampToValueAtTime(440, now + 0.35);
+                
+                gain.gain.setValueAtTime(0.4, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.38);
+                
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.4);
+            };
+
+            playSirenPulse();
+            alarmInterval = setInterval(playSirenPulse, 450);
+        }
+
+        function stopAlarmSound() {
+            if (alarmInterval) {
+                clearInterval(alarmInterval);
+                alarmInterval = null;
+            }
+        }
+
+        // Bunyi Kemenangan (Skor > 80)
+        function playVictorySound() {
+            initAudio();
+            const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+            notes.forEach((freq, idx) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                const startTime = audioCtx.currentTime + idx * 0.14;
+                osc.frequency.setValueAtTime(freq, startTime);
+                gain.gain.setValueAtTime(0.25, startTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.4);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(startTime);
+                osc.stop(startTime + 0.42);
+            });
+        }
+
+        // Bunyi Penyemangat (Skor <= 80)
+        function playEncourageSound() {
+            initAudio();
+            const notes = [440, 493.88, 523.25]; // A4, B4, C5
+            notes.forEach((freq, idx) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                const startTime = audioCtx.currentTime + idx * 0.18;
+                osc.frequency.setValueAtTime(freq, startTime);
+                gain.gain.setValueAtTime(0.2, startTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.35);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(startTime);
+                osc.stop(startTime + 0.36);
+            });
+        }
+
+        /* =========================================================
+           3. RENDER SOAL & AKTIVASI SISTEM UJIAN
+           ========================================================= */
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            hotsQuestions.forEach((q, index) => {
+                const letters = ['A', 'B', 'C', 'D'];
+                let optionsHTML = '';
+
+                q.options.forEach((opt, optIdx) => {
+                    optionsHTML += `
+                        <label class="option-label block cursor-pointer transition-transform duration-150">
+                            <input type="radio" name="question_${q.id}" value="${optIdx}" class="sr-only">
+                            <div class="option-box flex items-start gap-3.5 p-3.5 sm:p-4 rounded-2xl border-2 border-slate-200 bg-white transition-all">
+                                <span class="option-letter w-8 h-8 rounded-xl border-2 border-slate-300 flex items-center justify-center font-bold text-sm text-slate-600 shrink-0 transition-colors">
+                                    ${letters[optIdx]}
+                                </span>
+                                <span class="text-sm sm:text-base text-slate-700 font-medium pt-0.5 leading-snug">
+                                    ${opt}
+                                </span>
+                            </div>
+                        </label>
+                    `;
+                });
+
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-3xl p-6 sm:p-7 shadow-md border border-slate-100';
+                card.innerHTML = `
+                    <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
+                        <span class="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full">
+                            Soal No. ${index + 1}
+                        </span>
+                        <span class="text-xs font-semibold text-slate-400">${q.category}</span>
+                    </div>
+                    <p class="text-base sm:text-lg font-bold text-slate-900 mb-4 leading-snug">
+                        ${q.question}
+                    </p>
+                    <div class="space-y-2.5">
+                        ${optionsHTML}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Submit Form Identitas -> Mulai Ujian
+        document.getElementById('startForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nameInput = document.getElementById('studentName').value.trim();
+            const classInput = document.getElementById('studentClass').value.trim();
+            const errorBox = document.getElementById('formError');
+
+            if (!nameInput || !classInput) {
+                errorBox.classList.remove('hidden');
+                return;
+            }
+            errorBox.classList.add('hidden');
+
+            // Simpan identitas siswa
+            studentData.name = nameInput;
+            studentData.className = classInput;
+
+            // Update Header Ujian
+            document.getElementById('displayStudentName').textContent = studentData.name;
+            document.getElementById('displayStudentClass').textContent = `Kelas: ${studentData.className}`;
+
+            // Aktifkan audio context saat interaksi klik tombol
+            initAudio();
+
+            // Render Soal & Tampilkan Halaman Ujian
+            renderQuestions();
+            document.getElementById('introSection').classList.add('hidden');
+            document.getElementById('resultSection').classList.add('hidden');
+            document.getElementById('quizSection').classList.remove('hidden');
+            document.getElementById('examHeader').classList.remove('hidden');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Aktifkan Pengawas Anti-Cheating & Timer 20 Menit
+            examActive = true;
+            startCountdownTimer();
+        });
+
+        /* =========================================================
+           4. TIMER 20 MENIT HITUNG MUNDUR
+           ========================================================= */
+        function startCountdownTimer() {
+            clearInterval(timerInterval);
+            timeRemaining = 20 * 60; // Reset ke 20:00
+            updateTimerUI();
+
+            timerInterval = setInterval(() => {
+                if (!examActive) {
+                    clearInterval(timerInterval);
+                    return;
+                }
+
+                timeRemaining--;
+                updateTimerUI();
+
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    triggerExamFailure("Waktu Ujian (20 Menit) Telah Habis!");
+                }
+            }, 1000);
+        }
+
+        function updateTimerUI() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            const formatted = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            const display = document.getElementById('timerDisplay');
+            const timerBox = document.getElementById('timerBox');
+
+            display.textContent = formatted;
+
+            // Beri warna merah berkedip jika sisa waktu di bawah 2 menit
+            if (timeRemaining <= 120) {
+                timerBox.classList.remove('bg-slate-900');
+                timerBox.classList.add('bg-red-600', 'animate-pulse');
+            } else {
+                timerBox.classList.add('bg-slate-900');
+                timerBox.classList.remove('bg-red-600', 'animate-pulse');
+            }
+        }
+
+        /* =========================================================
+           5. SISTEM DETEKSI PINDAH TAB / KELUAR APLIKASI
+           ========================================================= */
+        function handleCheatingDetection() {
+            if (examActive) {
+                triggerExamFailure("Terdeteksi Beralih Tab Baru atau Keluar dari Layar Ujian!");
+            }
+        }
+
+        // Deteksi perpindahan tab / minimize browser / ganti aplikasi di HP
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden && examActive) {
+                handleCheatingDetection();
+            }
+        });
+
+        // Deteksi kehilangan fokus jendela (misal split-screen / klik jendela lain)
+        window.addEventListener('blur', () => {
+            if (examActive) {
+                handleCheatingDetection();
+            }
+        });
+
+        function triggerExamFailure(reason) {
+            examActive = false;
+            clearInterval(timerInterval);
+
+            // Tampilkan nama & kelas di layar gagal
+            document.getElementById('failStudentName').textContent = studentData.name;
+            document.getElementById('failStudentClass').textContent = studentData.className;
+            document.getElementById('failReasonText').textContent = reason;
+
+            // Munculkan layar merah penuh & bunyikan alarm perangkat
+            document.getElementById('cheatOverlay').classList.remove('hidden');
+            startAlarmSound();
+        }
+
+        function acknowledgeFailAndReset() {
+            stopAlarmSound();
+            document.getElementById('cheatOverlay').classList.add('hidden');
+            resetExam();
+        }
+
+        /* =========================================================
+           6. PENILAIAN SKOR & ANIMASI SELAMAT / SEMANGAT
+           ========================================================= */
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!examActive) return;
+
+            let correctCount = 0;
+            let unanswered = 0;
+            const userAnswers = [];
+
+            hotsQuestions.forEach((q) => {
+                const selected = document.querySelector(`input[name="question_${q.id}"]:checked`);
+                if (!selected) {
+                    unanswered++;
+                } else {
+                    const val = parseInt(selected.value, 10);
+                    userAnswers.push(val);
+                    if (val === q.correct) {
+                        correctCount++;
+                    }
+                }
+            });
+
+            const validationMsg = document.getElementById('quizValidationMsg');
+            if (unanswered > 0) {
+                validationMsg.classList.remove('hidden');
+                validationMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+            validationMsg.classList.add('hidden');
+
+            // Nonaktifkan pengawas tab karena ujian sudah selesai dikumpulkan
+            examActive = false;
+            clearInterval(timerInterval);
+
+            // Hitung Skor (5 soal x 20 poin = 100)
+            const finalScore = correctCount * 20;
+            showResultScreen(finalScore, correctCount, userAnswers);
+        });
+
+        function showResultScreen(score, correctCount, userAnswers) {
+            document.getElementById('quizSection').classList.add('hidden');
+            document.getElementById('examHeader').classList.add('hidden');
+            document.getElementById('resultSection').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Isi data siswa & skor
+            document.getElementById('resName').textContent = studentData.name;
+            document.getElementById('resClass').textContent = studentData.className;
+            document.getElementById('resScore').textContent = score;
+            document.getElementById('resCorrectCount').textContent = `Benar ${correctCount} dari ${hotsQuestions.length} soal`;
+
+            const animContainer = document.getElementById('animationContainer');
+            const headline = document.getElementById('resultHeadline');
+            const subheadline = document.getElementById('resultSubheadline');
+            const resScoreEl = document.getElementById('resScore');
+
+            // Cek kondisi: Di atas 80 (> 80) vs Di bawah/sama dengan 80 (<= 80)
+            if (score > 80) {
+                // EFEK SELAMAT & MANTAP! (Nilai 100)
+                headline.textContent = "Selamat dan Mantap!";
+                headline.className = "text-2xl sm:text-4xl font-extrabold mb-2 text-emerald-600";
+                subheadline.textContent = `Luar biasa, ${studentData.name}! Kamu berhasil menguasai materi Recount Text dan menganalisis soal HOTS dengan sangat sempurna!`;
+                resScoreEl.className = "text-5xl font-black text-emerald-600";
+
+                // Animasi SVG Karakter Piala & Bintang Tersenyum Memberi Selamat
+                animContainer.innerHTML = `
+                    <svg class="w-40 h-40 animate-trophy" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Sparkles -->
+                        <circle cx="35" cy="45" r="6" fill="#FACC15"/>
+                        <circle cx="165" cy="40" r="7" fill="#34D399"/>
+                        <circle cx="170" cy="120" r="5" fill="#60A5FA"/>
+                        <circle cx="30" cy="125" r="5" fill="#F472B6"/>
+                        <!-- Trophy Cup -->
+                        <path d="M60 45H140V95C140 117.091 122.091 135 100 135C77.9086 135 60 117.091 60 95V45Z" fill="#FBBF24" stroke="#D97706" stroke-width="4"/>
+                        <!-- Handles -->
+                        <path d="M60 60H42C36.4772 60 32 64.4772 32 70V80C32 91.0457 40.9543 100 52 100H60" stroke="#D97706" stroke-width="5" stroke-linecap="round"/>
+                        <path d="M140 60H158C163.523 60 168 64.4772 168 70V80C168 91.0457 159.046 100 148 100H140" stroke="#D97706" stroke-width="5" stroke-linecap="round"/>
+                        <!-- Stem & Base -->
+                        <rect x="90" y="135" width="20" height="25" fill="#D97706"/>
+                        <rect x="65" y="158" width="70" height="14" rx="7" fill="#1E293B"/>
+                        <!-- Cute Happy Face on Trophy -->
+                        <circle cx="86" cy="82" r="5" fill="#1E293B"/>
+                        <circle cx="114" cy="82" r="5" fill="#1E293B"/>
+                        <path d="M88 96C92 103 108 103 112 96" stroke="#1E293B" stroke-width="4" stroke-linecap="round"/>
+                        <!-- Rosy Cheeks -->
+                        <circle cx="77" cy="91" r="4" fill="#FB7185" opacity="0.7"/>
+                        <circle cx="123" cy="91" r="4" fill="#FB7185" opacity="0.7"/>
+                        <!-- Crown Star -->
+                        <polygon points="100,12 106,26 121,27 109,37 113,51 100,43 87,51 91,37 79,27 94,26" fill="#FDE047" stroke="#EAB308" stroke-width="2"/>
+                    </svg>
+                `;
+
+                launchConfetti();
+                playVictorySound();
+            } else {
+                // EFEK YUKK SEMANGAT & COBA LAGI! (Nilai <= 80)
+                headline.textContent = "Yukk Semangat dan Coba Lagi!";
+                headline.className = "text-2xl sm:text-4xl font-extrabold mb-2 text-amber-600";
+                subheadline.textContent = `Jangan menyerah, ${studentData.name}! Baca kembali teks dengan teliti, pelajari pembahasannya di bawah, dan raih nilai di atas 80!`;
+                resScoreEl.className = "text-5xl font-black text-amber-600";
+
+                // Animasi SVG Karakter Maskot Penyemangat Melambaikan Tangan
+                animContainer.innerHTML = `
+                    <svg class="w-40 h-40 animate-bounce-slow" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Body -->
+                        <rect x="55" y="65" width="90" height="85" rx="35" fill="#6366F1" stroke="#4338CA" stroke-width="4"/>
+                        <!-- Belly Patch -->
+                        <rect x="72" y="95" width="56" height="42" rx="20" fill="#E0E7FF"/>
+                        <!-- Antenna -->
+                        <line x1="100" y1="65" x2="100" y2="40" stroke="#4338CA" stroke-width="5" stroke-linecap="round"/>
+                        <circle cx="100" cy="34" r="9" fill="#FACC15" stroke="#CA8A04" stroke-width="3"/>
+                        <!-- Left Arm -->
+                        <path d="M55 100C38 100 32 115 38 128" stroke="#4338CA" stroke-width="10" stroke-linecap="round"/>
+                        <!-- Right Waving Arm (Animated) -->
+                        <g class="animate-wave">
+                            <path d="M145 98C162 88 172 72 165 58" stroke="#4338CA" stroke-width="10" stroke-linecap="round"/>
+                            <circle cx="165" cy="56" r="8" fill="#FACC15"/>
+                        </g>
+                        <!-- Eyes -->
+                        <circle cx="83" cy="82" r="7" fill="white"/>
+                        <circle cx="85" cy="82" r="3.5" fill="#1E293B"/>
+                        <circle cx="117" cy="82" r="7" fill="white"/>
+                        <circle cx="115" cy="82" r="3.5" fill="#1E293B"/>
+                        <!-- Encouraging Smile -->
+                        <path d="M90 93C94 99 106 99 110 93" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+                        <!-- Feet -->
+                        <rect x="70" y="148" width="22" height="14" rx="7" fill="#312E81"/>
+                        <rect x="108" y="148" width="22" height="14" rx="7" fill="#312E81"/>
+                        <!-- Heart Badge -->
+                        <path d="M100 124C100 124 88 116 88 109C88 105 91 103 94 103C97 103 100 106 100 106C100 106 103 103 106 103C109 103 112 105 112 109C112 116 100 124 100 124Z" fill="#F43F5E"/>
+                    </svg>
+                `;
+
+                playEncourageSound();
+            }
+
+            // Render Pembahasan Singkat agar Siswa Belajar dari Kesalahan
+            renderAnswerReview(userAnswers);
+        }
+
+        function renderAnswerReview(userAnswers) {
+            const container = document.getElementById('reviewContainer');
+            const letters = ['A', 'B', 'C', 'D'];
+            let html = `<h3 class="text-sm font-extrabold uppercase tracking-wider text-slate-500 mb-2">Ringkasan Evaluasi Jawaban:</h3>`;
+
+            hotsQuestions.forEach((q, idx) => {
+                const isCorrect = userAnswers[idx] === q.correct;
+                const badgeClass = isCorrect
+                    ? 'bg-emerald-100 text-emerald-800 border-emerald-200'
+                    : 'bg-rose-100 text-rose-800 border-rose-200';
+                const statusText = isCorrect ? 'Benar ✓' : 'Kurang Tepat ✕';
+
+                html += `
+                    <div class="p-3.5 rounded-2xl border ${isCorrect ? 'border-emerald-200 bg-emerald-50/40' : 'border-rose-200 bg-rose-50/40'} text-xs sm:text-sm">
+                        <div class="flex items-center justify-between gap-2 mb-1">
+                            <span class="font-bold text-slate-800">Soal ${idx + 1}: Jawaban Kamu (${letters[userAnswers[idx]]})</span>
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold border ${badgeClass}">${statusText}</span>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">${q.explanation}</p>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Efek Confetti Warna-warni untuk Nilai > 80
+        function launchConfetti() {
+            const colors = ['#10B981', '#F59E0B', '#6366F1', '#EC4899', '#3B82F6'];
+            for (let i = 0; i < 65; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece rounded-sm';
+                piece.style.left = Math.random() * 100 + 'vw';
+                piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.animationDuration = (Math.random() * 2 + 2.2) + 's';
+                piece.style.animationDelay = (Math.random() * 0.8) + 's';
+                document.body.appendChild(piece);
+
+                setTimeout(() => piece.remove(), 4500);
+            }
+        }
+
+        // Reset ke Halaman Awal
+        function resetExam() {
+            examActive = false;
+            clearInterval(timerInterval);
+            stopAlarmSound();
+
+            document.getElementById('quizForm').reset();
+            document.getElementById('resultSection').classList.add('hidden');
+            document.getElementById('quizSection').classList.add('hidden');
+            document.getElementById('examHeader').classList.add('hidden');
+            document.getElementById('introSection').classList.remove('hidden');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
